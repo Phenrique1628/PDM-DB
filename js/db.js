@@ -14,7 +14,7 @@ async function createDB() {
                   })
 
                   store.createIndex('id', 'id');
-                  showResult("Little Bank criado com sucesso!")
+                  showResult("Banco criado!")
              }
         }
     });
