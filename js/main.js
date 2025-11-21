@@ -12,7 +12,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var constraints = { video: { facingMode: "user" }, audio: false };
+var constraints = { video: { facingMode: "environment" }, audio: false };
 
 
 // capturando os elementos em tela
