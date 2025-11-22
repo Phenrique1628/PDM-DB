@@ -32,6 +32,10 @@ function cameraStart() {
       cameraView.style.display = 'block';
       cameraOutput.style.display = 'none';
       cameraSensor.style.display = 'none';
+
+      // garantir que o container do preview esteja posicionado para posicionamento absoluto da miniatura
+      const cameraContainer = document.getElementById('camera');
+      if (cameraContainer) cameraContainer.style.position = 'relative';
     })
     .catch(function (error) {
       console.error("Ocorreu um Erro.", error);
@@ -48,13 +52,23 @@ cameraTrigger.onclick = function () {
   // converte para base64 e mostra apenas a imagem de saída
   cameraOutput.src = cameraSensor.toDataURL("image/webp");
   cameraOutput.classList.add("taken");
+  // mostrar miniatura no canto sem esconder o vídeo
   cameraOutput.style.display = 'block';
+  // estilo de miniatura (aparece sobre o vídeo, canto inferior direito)
+  cameraOutput.style.position = 'absolute';
+  cameraOutput.style.width = '120px';
+  cameraOutput.style.height = 'auto';
+  cameraOutput.style.bottom = '10px';
+  cameraOutput.style.right = '10px';
+  cameraOutput.style.zIndex = '100';
+  cameraOutput.style.border = '2px solid rgba(255,255,255,0.9)';
+  cameraOutput.style.boxShadow = '0 2px 6px rgba(0,0,0,0.5)';
+  cameraOutput.style.borderRadius = '4px';
 
 const timestamp = new Date().toLocaleString(); // ex: "21/11/2025 14:30:05" dependendo do locale
 cameraOutput.dataset.timestamp = timestamp;
 
-  // esconder vídeo e canvas para não duplicar a imagem na tela
-  cameraView.style.display = 'none';
+  // manter o vídeo visível; apenas esconder o canvas
   cameraSensor.style.display = 'none';
 };
 
