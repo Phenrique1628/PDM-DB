@@ -50,9 +50,8 @@ cameraTrigger.onclick = function () {
   cameraOutput.classList.add("taken");
   cameraOutput.style.display = 'block';
 
-  // grava timestamp ISO no elemento de saída para uso posterior ao salvar
-  const timestamp = new Date().toISOString();
-  cameraOutput.dataset.timestamp = timestamp;
+const timestamp = new Date().toLocaleString(); // ex: "21/11/2025 14:30:05" dependendo do locale
+cameraOutput.dataset.timestamp = timestamp;
 
   // esconder vídeo e canvas para não duplicar a imagem na tela
   cameraView.style.display = 'none';

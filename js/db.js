@@ -73,7 +73,7 @@ async function addData() {
     // pega a imagem atual do <img id="camera--output"> e o timestamp salvo no dataset
     const imgEl = document.getElementById("camera--output");
     const fotoBase64 = imgEl.src;
-    const timestamp = imgEl.dataset.timestamp || new Date().toISOString();
+    const timestamp = imgEl.dataset.timestamp || new Date().toLocaleString();
 
     const tx = await db.transaction('plantas', 'readwrite');
     const store = tx.objectStore('plantas');
@@ -112,7 +112,7 @@ async function getData() {
     let html = "<h3>Registros encontrados:</h3>";
 
     plantas.forEach(p => {
-        const when = p.timestamp ? (new Date(p.timestamp)).toLocaleString() : '';
+        const when = p.timestamp || '';
         html += `
             <div style="border:1px solid #aaa; margin:10px; padding:10px;">
                 <p><b>Nome:</b> ${p.nome}</p>
