@@ -6,7 +6,7 @@ async function createDB() {
     try {
         db = await openDB('little_bank', 2, {
             upgrade(db) {
-                // Se ainda não existe, cria a store
+                
                 if (!db.objectStoreNames.contains('plantas')) {
                     const store = db.createObjectStore('plantas', {
                         keyPath: 'id',
