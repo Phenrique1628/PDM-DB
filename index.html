@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="description" content="exemplo de fallback">
-    <title>Minha primeira PWA</title>
+    <title>Jardim Online 🌱</title>
     <link rel="apple-touch-icon" href="images/pwa-icon-256.png" />
     <link rel="stylesheet" href="css/style.css" />
-    <!--viewport para designers responsivos (mobo), content é a configuração-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="white" />
     <link rel="manifest" href="manifest.json" />
@@ -18,25 +17,32 @@
 
 <body class="fullscreen">
     <div class="container">
+
+    <div class="container-title">
+    <h1 class="title">Bem-Vindo ao Jardim Online!</h1>
+    <p class="title">Aqui, você pode registrar as fotos de suas plantas favoritas! 🤩🌱</p>
+    </div>
         <main id="camera">
             <canvas id="camera--sensor"></canvas>
             <video id="camera--view" autoplay playsinline></video>
             <img id="camera--output">
-            <button id="camera--trigger">tirar foto</button>
+            <button id="camera--trigger">TIRAR FOTO</button>
         </main>
 
-        <input placeholder="nome" id="nome" type="text">
-        <textarea placeholder="anotação" id="anotacao" rows="2"></textarea>
+        <div class="anotacoes-container">     
+        <input placeholder="Nome da Planta" id="nome" type="text">
+        <textarea placeholder="Anotações sobre a Planta" id="anotacao" rows="2"></textarea>
 
         <div style="text-align: center">
-            <button id="btnSalvar">Salvar</button>
-            <button id="btnListar">Listar</button>
+            <button id="btnSalvar">SALVAR</button>
+            <button id="btnListar">LISTAR</button>
         </div>
         <div>
             <output></output>
         </div>
-
+        </div>   
     </div>
+
 </body>
 
 </html>

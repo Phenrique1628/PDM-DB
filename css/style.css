@@ -1,5 +1,10 @@
 body {
     font-family: sans-serif;
+    background-image: url('/public/c521a587-b5ae-45b9-a415-d146388bfa0a.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 html, .fullscreen {
@@ -18,3 +23,92 @@ html, .fullscreen {
     font-size: 3rem;
 }
 
+ #camera--trigger{
+      background-color: rgb(7, 240, 7);
+      color: white;
+      font-size: 16px;
+      border-radius: 30px;
+      border: none;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+      bottom: 30px;
+      left: calc(50% - 100px);
+      margin-left: 20px;
+      margin-top: 20px;
+  }
+
+  #camera--view, #camera--sensor, #camera--output{
+    margin-left: 20px;
+     transform: scaleX(-1);
+      filter: FlipH;
+      border: #10d60a 3px solid;
+  }
+
+  .container-title{
+    margin-top: 70px;
+}
+
+.title{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #20c71a;
+    margin-top: 50px;
+}
+
+#btnSalvar{
+  background-color: rgb(7, 240, 7);
+  color: white;
+   font-size: 16px;
+      border-radius: 30px;
+      border: none;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+}
+
+
+
+#btnListar{
+ background-color: rgb(7, 240, 7);
+ color: white;
+  font-size: 16px;
+      border-radius: 30px;
+      border: none;
+      padding: 15px 20px;
+      text-align: center;
+      box-shadow: 0 5px 10px 0 rgba(0,0,0,0.2);
+}
+
+#btnSalvar:hover, #btnListar:hover, #camera--trigger:hover{
+    background-color: rgb(0, 200, 0);
+    cursor: pointer;
+}
+
+#nome{
+    margin-left: 20px;
+    box-sizing: border-box;
+    border: 3px solid #0b8a07;
+    transition: 0.5s;
+    outline: none;
+    border-radius: 8px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#anotacao{
+    font-family:Arial, Helvetica, sans-serif;
+    border: 3px solid #0b8a07;
+    margin-left: 1%;
+    border-radius: 8px;
+}
+
+.anotacoes-container{
+    width: 400px;
+    margin-left: 50%;
+    margin-top: -300px;
+    border: #0b8a07 3px solid;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: white;
+}

@@ -1,6 +1,6 @@
 {
-    "name": "exemplo",
-    "short_name": "exemplo PWA",
+    "name": "Jardim Online PWA",
+    "short_name": "Jardim PWA",
     "icons": [
         {
             "src": "images/pwa-icon-256.png",
