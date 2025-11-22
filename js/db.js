@@ -4,21 +4,59 @@ let db;
 
 async function createDB() {
     try {
-        db = await openDB('little_bank', 1, {
+        // bump version to 2 so we can create a store with autoIncrement id
+        db = await openDB('little_bank', 2, {
             upgrade(db, oldVersion, newVersion, transaction) {
-                if (oldVersion < 1) {
+                // If this is a fresh DB, create the store with autoIncrement id
+                if (!db.objectStoreNames.contains('plantas')) {
                     const store = db.createObjectStore('plantas', {
-                        keyPath: 'nome',
+                        keyPath: 'id',
+                        autoIncrement: true
                     });
-                    // criar índice para data (opcional)
-                    store.createIndex('date', 'date');
-                    showResult("Banco criado!");
+                    store.createIndex('nome', 'nome');
+                    store.createIndex('timestamp', 'timestamp');
+                } else if (oldVersion < 2) {
+                    // Attempt a simple migration: read existing records, recreate store with id, copy records.
+                    try {
+                        const oldStore = transaction.objectStore('plantas');
+                        const existing = oldStore.getAll();
+                        existing.then(records => {
+                            // delete old store and recreate with autoIncrement id
+                            try {
+                                db.deleteObjectStore('plantas');
+                            } catch (e) {
+                                // ignore if deletion not possible
+                            }
+                            const newStore = db.createObjectStore('plantas', { keyPath: 'id', autoIncrement: true });
+                            newStore.createIndex('nome', 'nome');
+                            newStore.createIndex('timestamp', 'timestamp');
+                            // copy records (some browsers may not allow async operations here; if so, clear site data)
+                            records.forEach(r => {
+                                // preserve nome/date/foto
+                                newStore.add({ nome: r.nome, timestamp: r.date || r.timestamp, foto: r.foto, anotacao: r.anotacao || '' });
+                            });
+                        }).catch(() => {
+                            // if migration fails, we'll create the store empty below
+                            if (!db.objectStoreNames.contains('plantas')) {
+                                const s = db.createObjectStore('plantas', { keyPath: 'id', autoIncrement: true });
+                                s.createIndex('nome', 'nome');
+                                s.createIndex('timestamp', 'timestamp');
+                            }
+                        });
+                    } catch (e) {
+                        // fallback: ensure store exists
+                            if (!db.objectStoreNames.contains('plantas')) {
+                            const s = db.createObjectStore('plantas', { keyPath: 'id', autoIncrement: true });
+                            s.createIndex('nome', 'nome');
+                            s.createIndex('timestamp', 'timestamp');
+                        }
+                    }
                 }
             }
         });
         showResult("Banco de dados aberto!");
     } catch (e) {
-        showResult("Erro ao criar o banco de dados: " + e.message);
+        showResult("Erro ao criar o banco de dados: " + e.message + ". Se já existia um DB antigo, limpe os dados do site e recarregue a página.");
     }
 }
 
@@ -29,18 +67,21 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function addData() {
-    const date = document.getElementById("date").value;
     const nome = document.getElementById("nome").value;
+    const anotacao = document.getElementById("anotacao").value;
 
-    // pega a imagem atual do <img id="camera--output">
-    const fotoBase64 = document.getElementById("camera--output").src;
+    // pega a imagem atual do <img id="camera--output"> e o timestamp salvo no dataset
+    const imgEl = document.getElementById("camera--output");
+    const fotoBase64 = imgEl.src;
+    const timestamp = imgEl.dataset.timestamp || new Date().toISOString();
 
     const tx = await db.transaction('plantas', 'readwrite');
     const store = tx.objectStore('plantas');
 
-    await store.put({
+    await store.add({
         nome: nome,
-        date: date,
+        anotacao: anotacao,
+        timestamp: timestamp,
         foto: fotoBase64 // salva a foto!
     });
 
@@ -71,10 +112,12 @@ async function getData() {
     let html = "<h3>Registros encontrados:</h3>";
 
     plantas.forEach(p => {
+        const when = p.timestamp ? (new Date(p.timestamp)).toLocaleString() : '';
         html += `
             <div style="border:1px solid #aaa; margin:10px; padding:10px;">
                 <p><b>Nome:</b> ${p.nome}</p>
-                <p><b>Data:</b> ${p.date}</p>
+                <p><b>Anotação:</b> ${p.anotacao || ''}</p>
+                <p><b>Data hora:</b> ${when}</p>
                 <img src="${p.foto}" style="width:150px; border:1px solid #444;">
             </div>
         `;
