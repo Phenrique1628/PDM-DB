@@ -2,6 +2,12 @@ import { openDB } from 'https://unpkg.com/idb?module';
 
 let db;
 
+async function deleteDB(id) {
+        await db.delete('plantas', id);
+        getData();
+}
+window.deleteDB = deleteDB;
+
 async function createDB() {
     try {
         db = await openDB('little_bank', 2, {
@@ -60,6 +66,7 @@ async function getData() {
     }
 
     let html = "<h3>Registros encontrados:</h3>";
+    
 
     plantas.forEach(p => {
         html += `
@@ -68,11 +75,18 @@ async function getData() {
                 <p><b>Anotação:</b> ${p.anotacao}</p>
                 <p><b>Data hora:</b> ${p.timestamp}</p>
                 <img src="${p.foto}" style="width:150px; border:1px solid #444;">
+                <br><br>
+                <button onclick="deleteDB(${p.id})"
+                style="background:red; color:white; padding:5px 10px; border:none; cursor:pointer;">
+                Remover
+            </button>
             </div>`;
     });
 
     output.innerHTML = html;
 }
+
+
 
 function showResult(text) {
     document.querySelector("output").innerHTML = text;
