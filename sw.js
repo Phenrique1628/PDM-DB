@@ -4,7 +4,7 @@ import { registerRoute, Route } from 'workbox-routing';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 import { ExpirationPlugin } from 'workbox-expiration';
 
-// configurando o cache
+
 const pageCache = new CacheFirst({
   cacheName: 'primeira-pwa-cache',
   plugins: [
@@ -17,15 +17,15 @@ const pageCache = new CacheFirst({
   ],
 });
 
-//indicando o cache de página
+
 warmStrategyCache({
   urls: ['/index.html', '/'],
   strategy: pageCache,
 });
-//registrando a rota
+
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// configurando cache de assets
+
 registerRoute(
   ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
   new StaleWhileRevalidate({
@@ -38,7 +38,6 @@ registerRoute(
   }),
 );
 
-// configurando offline fallback
 offlineFallback({
   pageFallback: '/offline.html',
 });
@@ -52,7 +51,7 @@ registerRoute(
         statuses: [0, 200],
       }),
       new ExpirationPlugin({
-        maxAgeSeconds: 60 * 60 * 24 * 30, // 30 dias
+        maxAgeSeconds: 60 * 60 * 24 * 30, 
       }),
     ],
   })
