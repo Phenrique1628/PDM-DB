@@ -112,3 +112,105 @@ html, .fullscreen {
     padding: 8px;
     background-color: white;
 }
+
+
+
+@media (max-width: 1024px) {
+    .title {
+        font-size: 40px;
+    }
+
+    #camera--view, #camera--sensor, #camera--output {
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .anotacoes-container {
+        margin-left: 40%;
+        margin-top: -200px;
+        width: 350px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 32px;
+        margin-top: 20px;
+    }
+
+    #camera--view, #camera--sensor, #camera--output {
+        margin-left: 0;
+        width: 95%;
+    }
+
+    #camera--trigger,
+    #btnSalvar,
+    #btnListar {
+        width: 80%;
+        left: 0;
+        margin-left: 10%;
+    }
+
+    .anotacoes-container {
+        margin: 30px auto 0 auto;
+        width: 90%;
+        float: none;
+    }
+
+    #nome,
+    #anotacao {
+        width: 90%;
+        margin-left: 5%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        background-size: cover;
+        background-position: center;
+    }
+
+    .title {
+        font-size: 27.2px;
+    }
+
+    #camera--view, #camera--sensor, #camera--output {
+        width: 95%;
+        margin-left: 2.5%;
+    }
+
+    #camera--trigger,
+    #btnSalvar,
+    #btnListar {
+        width: 90%;
+        padding: 12px;
+        font-size: 14px;
+        margin-left: 5%;
+    }
+
+    .anotacoes-container {
+        margin: 20px auto;
+        width: 90%;
+    }
+
+    #nome,
+    #anotacao {
+        width: 90%;
+        margin-left: 5%;
+    }
+}
+
+@media (max-width: 360px) {
+    .title {
+        font-size: 22.5px;
+    }
+
+    #camera--trigger,
+    #btnSalvar,
+    #btnListar {
+        font-size: 13px;
+        padding: 10px;
+    }
+}
