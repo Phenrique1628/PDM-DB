@@ -150,6 +150,7 @@ html, .fullscreen {
         width: 80%;
         left: 0;
         margin-left: 10%;
+        margin-top: 5px;
     }
 
     .anotacoes-container {
